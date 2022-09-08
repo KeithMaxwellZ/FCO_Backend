@@ -2,7 +2,6 @@ import status
 
 from utils import *
 
-ACTION_TABLE = {}
 ACTION_ID = {}
 ACTIONS_ALL = []
 
@@ -18,8 +17,6 @@ class ActionBase:
             quality_multiplier: float = 0.0,
             buff=-1
     ):
-        self.id = len(ACTION_TABLE)
-
         self.name = name
         self.durability_cost = durability_cost
         self.cp_cost = cp_cost
@@ -28,8 +25,7 @@ class ActionBase:
         self.quality_multiplier = quality_multiplier
         self.buff = buff
 
-        ACTION_TABLE[self.name] = self
-        ACTION_ID[len(ACTIONS_ALL)] = self
+        ACTION_ID[self.name] = len(ACTIONS_ALL)
         ACTIONS_ALL.append(self)
 
     def check_success(self, engine):
@@ -39,6 +35,9 @@ class ActionBase:
         :return: success rate
         """
         return self.success_rate
+
+    def __str__(self):
+        return self.name
 
 
 class MuscleMemory(ActionBase):
@@ -298,3 +297,8 @@ Observe = Observe()
 TricksOfTheTrade = TricksOfTheTrade()
 FinalAppraisal = FinalAppraisal()
 HeartAndSoul = HeartAndSoul()
+
+if __name__ == '__main__':
+    print(ACTIONS_ALL)
+    for i in ACTIONS_ALL:
+        print(i)

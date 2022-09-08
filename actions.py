@@ -3,7 +3,8 @@ import status
 from utils import *
 
 ACTION_TABLE = {}
-
+ACTION_ID = {}
+ACTIONS_ALL = []
 
 class ActionBase:
     def __init__(
@@ -27,6 +28,8 @@ class ActionBase:
         self.buff = buff
 
         ACTION_TABLE[self.name] = self
+        ACTION_ID[len(ACTIONS_ALL)] = self
+        ACTIONS_ALL.append(self)
 
     def check_success(self, engine):
         """
@@ -294,3 +297,6 @@ Observe = Observe()
 TricksOfTheTrade = TricksOfTheTrade()
 FinalAppraisal = FinalAppraisal()
 HeartAndSoul = HeartAndSoul()
+
+print(ACTION_ID)
+print(ACTIONS_ALL)

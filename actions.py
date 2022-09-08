@@ -6,6 +6,7 @@ ACTION_TABLE = {}
 ACTION_ID = {}
 ACTIONS_ALL = []
 
+
 class ActionBase:
     def __init__(
             self,
@@ -297,6 +298,3 @@ Observe = Observe()
 TricksOfTheTrade = TricksOfTheTrade()
 FinalAppraisal = FinalAppraisal()
 HeartAndSoul = HeartAndSoul()
-
-print(ACTION_ID)
-print(ACTIONS_ALL)

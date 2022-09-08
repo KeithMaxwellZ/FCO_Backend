@@ -4,6 +4,11 @@ import random
 
 class Status:
     def __init__(self, name, color):
+        """
+        class for crafting status
+        :param name: name of the status
+        :param color: corresponding color
+        """
         self.name = name
         self.color = color
 
@@ -25,17 +30,23 @@ class StatusManager:
     HARD_STATUS = [WHITE, RED, YELLOW, CYAN, BLUE, PURPLE]
 
     def __init__(self, mode=2):
+        """
+
+        :param mode: Crafting mode
+        """
         self.mode = mode
 
     def next_status(self):
         if self.mode == 0:
             return WHITE
         elif self.mode == 1:
+            # 20% for red
             if random.randint(0, 100) > 20:
                 return WHITE
             else:
                 return RED
         elif self.mode == 2:
+            # Evenly distributed TODO: need some data
             r = math.floor(random.random() * len(StatusManager.HARD_STATUS))
             return StatusManager.HARD_STATUS[r]
 

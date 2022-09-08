@@ -29,6 +29,11 @@ class ActionBase:
         ACTION_TABLE[self.name] = self
 
     def check_success(self, engine):
+        """
+        Check if the condition is met
+        :param engine: current engine instance
+        :return: success rate
+        """
         return self.success_rate
 
 

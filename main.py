@@ -4,35 +4,8 @@ import random
 import actions
 import status
 from actions import ActionBase
+from utils import *
 
-BUFF_TABLE = {
-    "Muscle Memory": 0,
-    "Observation": 1,
-    "Waste Not": 2,
-    "Manipulation": 3,
-    "Veneration": 4,
-    "Great Stride": 5,
-    "Innovation": 6,
-    "Final Appraisal": 7,
-    "Heart and Soul": 8
-}
-
-BUFF_TABLE_REV = {
-    0: "Muscle Memory",
-    1: "Observation",
-    2: "Waste Not",
-    3: "Manipulation",
-    4: "Veneration",
-    5: "Great Stride",
-    6: "Innovation",
-    7: "Final Appraisal",
-    8: "Heart and Soul"
-}
-
-class EngineException(Exception):
-    def __init__(self, msg, errid):
-        self.msg = msg
-        self.errid = errid
 
 
 class Engine:
@@ -54,7 +27,7 @@ class Engine:
             self,
             progEff, qltyEff, cpTotal,
             duraTotal, progTotal, qltyTotal, progDiff, qltyDiff, progLvl, qltyLvl,
-            statusMode):
+            statusMode=2):
         self.prog_eff = progEff
         self.qlty_eff = qltyEff
         self.cp_total = cpTotal
@@ -96,14 +69,15 @@ class Engine:
         qim = action.quality_multiplier
         dc = action.durability_cost
         cc = action.cp_cost
-        sp = action.success_rate
+        sr = action.check_success(self)
         create_buff = action.buff
 
         # TODO: Specifications
         pass
-
+        if sr == 0:
+            return 100
         r = self.main_proc(
-            pim, qim, dc, cc, sp, create_buff
+            pim, qim, dc, cc, sr, create_buff
         )
 
         # TODO: refelct check
@@ -152,7 +126,7 @@ class Engine:
             if create_buff != -1:
                 b = math.floor(create_buff / 10)
                 d = create_buff - b * 10
-                self.buffs[b] = d + (2 if self.status == status.PURPLE and b != 1else 0)
+                self.buffs[b] = d + (2 if self.status == status.PURPLE and b != 1 else 0)
 
         return 0
 
@@ -163,7 +137,7 @@ class Engine:
         self.buffs[0] = 0
         status_const = 1.5 if self.status == status.CYAN else 1
         efficiency = prog_multiplier * (1 + buff)
-        print(base, efficiency, status_const)
+        print(prog_multiplier, base, buff, efficiency, status_const, 1.2*3)
         return math.floor(base * efficiency * status_const)
 
     def calculate_qlty(self, qlty_multiplier):
@@ -215,7 +189,7 @@ if __name__ == '__main__':
         )
     e.use_action(ActionBase(buff=BUFF_TABLE["Veneration"] * 10 + 4))
     e.dbg()
-    e.use_action(actions.basic_synth)
+    e.use_action(actions.BasicSynth)
     e.dbg()
-    e.use_action(actions.basic_synth)
+    e.use_action(actions.BasicSynth)
     e.dbg()

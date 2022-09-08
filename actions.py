@@ -1,3 +1,7 @@
+import status
+
+from utils import *
+
 ACTION_TABLE = {}
 
 
@@ -25,19 +29,30 @@ class ActionBase:
         ACTION_TABLE[self.name] = self
 
     def check_success(self, engine):
-        return True
+        return self.success_rate
 
 
 class MuscleMemory(ActionBase):
     def __init__(self):
-        super().__init__("Muscle Memory", 0, 6, 1.0, 0.0, 3.0, -1)
+        super().__init__("Muscle Memory", 0, 6, 1.0, 0.0, 3.0, 5)
+
+    def check_success(self, engine):
+        if engine.turn > 0:
+            raise EngineException("Not 1st turn", 1)
+        return self.success_rate
 
 
 class Reflect(ActionBase):
     def __init__(self):
         super().__init__("Reflect", 0, 6, 1.0, 1.0, 0.0, -1)
 
+    def check_success(self, engine):
+        if engine.turn > 0:
+            raise EngineException("Not 1st turn", 1)
+        return self.success_rate
 
+
+# Synthesis actions
 class BasicSynth(ActionBase):
     def __init__(self):
         super().__init__("Basic Synth", 10, 0, 1.0, 1.2, 0.0, -1)
@@ -57,6 +72,9 @@ class FocusedSynthesis(ActionBase):
     def __init__(self):
         super().__init__("Focused Synth", 10, 5, 0.5, 2.0, 0.0, -1)
 
+    def check_success(self, engine):
+        return self.success_rate + (0.5 if engine.buffs[1] > 0 else 0)
+
 
 class Groundwork(ActionBase):
     def __init__(self):
@@ -66,6 +84,14 @@ class Groundwork(ActionBase):
 class IntensiveSynthesis(ActionBase):
     def __init__(self):
         super().__init__("Intensive Synthesis", 10, 6, 1.0, 4.0, 0.0, -1)
+
+    def check_success(self, engine):
+        if engine.status != status.RED:
+            if engine.buffs[8] > 0:
+                engine.buffs[8] = 0
+            else:
+                raise EngineException("Not HQ", 2)
+        return self.success_rate
 
 
 class PrudentSynthesis(ActionBase):
@@ -78,6 +104,7 @@ class DelicateSynthesis(ActionBase):
         super().__init__("Groundwork", 10, 32, 1.0, 1.0, 1.0, -1)
 
 
+# Touch actions
 class BasicTouch(ActionBase):
     def __init__(self):
         super().__init__("Basic Touch", 10, 18, 1.0, 0.0, 1.0, -1)
@@ -95,12 +122,20 @@ class StandardTouch(ActionBase):
 
 class ByregotsBlessing(ActionBase):
     def __init__(self):
-        super().__init__("Byregots Touch", 10, 32, 1.0, 0.0, 1.25, -1)
+        super().__init__("Byregots Blessing", 10, 32, 1.0, 0.0, 1.0, -1)
 
 
 class PreciseTouch(ActionBase):
     def __init__(self):
         super().__init__("Precise Touch", 10, 18, 1.0, 0.0, 1.5, -1)
+
+    def check_success(self, engine):
+        if engine.status != status.RED:
+            if engine.buffs[8] > 0:
+                engine.buffs[8] = 0
+            else:
+                raise EngineException("Not HQ", 2)
+        return self.success_rate
 
 
 class PrudentTouch(ActionBase):
@@ -111,6 +146,9 @@ class PrudentTouch(ActionBase):
 class FocusedTouch(ActionBase):
     def __init__(self):
         super().__init__("Focused Touch", 10, 18, 0.5, 0.0, 1.5, -1)
+
+    def check_success(self, engine):
+        return self.success_rate + (0.5 if engine.buffs[1] > 0 else 0)
 
 
 class PreparatoryTouch(ActionBase):
@@ -127,60 +165,77 @@ class TrainedFinesse(ActionBase):
     def __init__(self):
         super().__init__("Trained Finesse", 10, 32, 1.0, 0.0, 1.25, -1)
 
+    def check_success(self, engine):
+        if engine.inner_quiet < 10:
+            raise EngineException("Inner Quiet < 10", 3)
+
 
 class MastersMend(ActionBase):
     def __init__(self):
         super().__init__("Master's Mend", 0, 88, 1.0, 0.0, 0.0, -1)
 
+    def check_success(self, engine):
+        engine.dura_current = (engine.dura_current + 30) % engine.dura_total
+
 
 class WasteNot(ActionBase):
     def __init__(self):
-        super().__init__("Waste Not", 0, 58, 1.0, 0.0, 0.0, -1)
+        super().__init__("Waste Not", 0, 58, 1.0, 0.0, 0.0, 24)
 
 
 class WasteNotII(ActionBase):
     def __init__(self):
-        super().__init__("Waste Not II", 0, 98, 1.0, 0.0, 0.0, -1)
+        super().__init__("Waste Not II", 0, 98, 1.0, 0.0, 0.0, 28)
 
 
 class Manipulation(ActionBase):
     def __init__(self):
-        super().__init__("Waste Not", 0, 96, 1.0, 0.0, 0.0, -1)
+        super().__init__("Waste Not", 0, 96, 1.0, 0.0, 0.0, 38)
 
 
 class Veneration(ActionBase):
     def __init__(self):
-        super().__init__("Veneration", 0, 18, 1.0, 0.0, 0.0, -1)
+        super().__init__("Veneration", 0, 18, 1.0, 0.0, 0.0, 44)
 
 
 class GreatStrides(ActionBase):
     def __init__(self):
-        super().__init__("Great Strides", 0, 32, 1.0, 0.0, 0.0, -1)
+        super().__init__("Great Strides", 0, 32, 1.0, 0.0, 0.0, 53)
 
 
 class Innovation(ActionBase):
     def __init__(self):
-        super().__init__("Innovation", 0, 18, 1.0, 0.0, 0.0, -1)
+        super().__init__("Innovation", 0, 18, 1.0, 0.0, 0.0, 64)
 
 
 class Observe(ActionBase):
     def __init__(self):
-        super().__init__("Observe", 0, 7, 1.0, 0.0, 0.0, -1)
+        super().__init__("Observe", 0, 7, 1.0, 0.0, 0.0, 11)
 
 
 class TricksOfTheTrade(ActionBase):
     def __init__(self):
         super().__init__("Tricks of the Trade", 0, 0, 1.0, 0.0, 0.0, -1)
 
+    def check_success(self, engine):
+        if engine.status != status.RED:
+            raise EngineException("Not HQ", 2)
+
 
 class FinalAppraisal(ActionBase):
     def __init__(self):
         super().__init__("Final Appraisal", 0, 1, 1.0, 0.0, 0.0, -1)
 
+    def check_success(self, engine):
+        engine.buffs[7] = 3
+
 
 class HeartAndSoul(ActionBase):
     def __init__(self):
         super().__init__("HeartAndSoul", 0, 0, 1.0, 0.0, 0.0, -1)
+
+    def check_success(self, engine):
+        engine.buffs[8] = 999
 
 
 MuscleMemory = MuscleMemory()

@@ -38,7 +38,7 @@ class MuscleMemory(ActionBase):
 
     def check_success(self, engine):
         if engine.turn > 0:
-            raise EngineException("Not 1st turn", 1)
+            raise EngineException(1)
         return self.success_rate
 
 
@@ -48,7 +48,7 @@ class Reflect(ActionBase):
 
     def check_success(self, engine):
         if engine.turn > 0:
-            raise EngineException("Not 1st turn", 1)
+            raise EngineException(1)
         return self.success_rate
 
 
@@ -90,7 +90,7 @@ class IntensiveSynthesis(ActionBase):
             if engine.buffs[8] > 0:
                 engine.buffs[8] = 0
             else:
-                raise EngineException("Not HQ", 2)
+                raise EngineException(2)
         return self.success_rate
 
 
@@ -134,7 +134,7 @@ class PreciseTouch(ActionBase):
             if engine.buffs[8] > 0:
                 engine.buffs[8] = 0
             else:
-                raise EngineException("Not HQ", 2)
+                raise EngineException(2)
         return self.success_rate
 
 
@@ -167,7 +167,7 @@ class TrainedFinesse(ActionBase):
 
     def check_success(self, engine):
         if engine.inner_quiet < 10:
-            raise EngineException("Inner Quiet < 10", 3)
+            raise EngineException(3)
 
 
 class MastersMend(ActionBase):
@@ -219,7 +219,7 @@ class TricksOfTheTrade(ActionBase):
 
     def check_success(self, engine):
         if engine.status != status.RED:
-            raise EngineException("Not HQ", 2)
+            raise EngineException(2)
 
 
 class FinalAppraisal(ActionBase):
@@ -227,15 +227,35 @@ class FinalAppraisal(ActionBase):
         super().__init__("Final Appraisal", 0, 1, 1.0, 0.0, 0.0, -1)
 
     def check_success(self, engine):
+        if engine.hsReady <= 0:
+            raise EngineException(5)
+        engine.faReady -= 1
         engine.buffs[7] = 3
+        return 0
 
 
 class HeartAndSoul(ActionBase):
     def __init__(self):
-        super().__init__("HeartAndSoul", 0, 0, 1.0, 0.0, 0.0, -1)
+        super().__init__("Heart And Soul", 0, 0, 1.0, 0.0, 0.0, -1)
 
     def check_success(self, engine):
+        if engine.hsReady <= 0:
+            raise EngineException(5)
+        engine.hsReady -= 1
         engine.buffs[8] = 999
+        return 0
+
+
+class CarefulObservation(ActionBase):
+    def __init__(self):
+        super().__init__("Careful Observation", 0, 0, 1.0, 0.0, 0.0, -1)
+
+    def check_success(self, engine):
+        if engine.caReady <= 0:
+            raise EngineException(5)
+        engine.caReady -= 1
+        engine.status = engine.status_manager.next_status()
+        return 0
 
 
 MuscleMemory = MuscleMemory()

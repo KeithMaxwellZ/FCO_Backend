@@ -24,6 +24,15 @@ BUFF_TABLE_REV = {
 
 
 class EngineException(Exception):
-    def __init__(self, msg, errid):
-        self.msg = msg
+    EXCEPTIONS = [
+        "Finished",
+        "Not 1st turn",
+        "Not HQ",
+        "Inner Quiet < 10",
+        "No enough CP",
+        "Already Used"
+    ]
+
+    def __init__(self, errid):
+        self.msg = EngineException.EXCEPTIONS[errid]
         self.errid = errid

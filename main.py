@@ -69,6 +69,7 @@ class Engine:
         self.status_manager = status.StatusManager(statusMode)
 
     def use_action(self, action: ActionBase):
+        print(action.name)
         # Check if crafting is finished
         if self.finished:
             raise EngineException(0)

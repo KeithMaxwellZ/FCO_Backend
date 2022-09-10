@@ -42,7 +42,7 @@ class ActionBase:
 
 class MuscleMemory(ActionBase):
     def __init__(self):
-        super().__init__("Muscle Memory", 0, 6, 1.0, 0.0, 3.0, 5)
+        super().__init__("Muscle Memory", 0, 6, 1.0, 3.0, 0.0, 5)
 
     def check_success(self, engine):
         if engine.turn > 0:
@@ -52,7 +52,7 @@ class MuscleMemory(ActionBase):
 
 class Reflect(ActionBase):
     def __init__(self):
-        super().__init__("Reflect", 0, 6, 1.0, 1.0, 0.0, -1)
+        super().__init__("Reflect", 0, 6, 1.0, 0.0, 1.0, -1)
 
     def check_success(self, engine):
         if engine.turn > 0:

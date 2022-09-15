@@ -59,5 +59,6 @@ class StatusManager:
         elif self.mode == 2:
             # Evenly distributed TODO: need some data
             r = math.floor(random.random() * len(StatusManager.HARD_STATUS))
-            return StatusManager.HARD_STATUS[r]
+            self.last = StatusManager.HARD_STATUS[r]
+            return self.last
 

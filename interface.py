@@ -83,13 +83,15 @@ def engine(uid: int, cmd):
             )
             return payload_gen(200, 'Success', None)
         except KeyError as e:
-            return payload_gen(1, "Missing Key", {"Missing": e.args[0]})
+            return payload_gen(301, "Missing Key", {"Missing": e.args[0]})
     elif cmd == "use-action":
         try:
             r = em.use_action(uid, data['Action'])
             return payload_gen(200, 'Success', {"Action Result": r})
         except KeyError:
-            return payload_gen(1, "Missing Action", None)
+            return payload_gen(302, "Missing Action", None)
+        except EngineException as e:
+            return payload_gen(310+e.errid, EngineException.EXCEPTIONS[e.errid], None)
     else:
         pass
 

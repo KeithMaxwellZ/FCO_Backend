@@ -59,7 +59,7 @@ def get_skills():
 @app.route('/initiate', methods=['GET'])
 def initiate():
     uid = em.init()
-    return payload_gen(200, "Success", uid)
+    return payload_gen(200, "Success", {"uid": uid})
 
 
 @app.route('/engine/<int:uid>/<cmd>', methods=['POST'])
@@ -93,6 +93,7 @@ def engine(uid: int, cmd):
         except EngineException as e:
             return payload_gen(310+e.errid, EngineException.EXCEPTIONS[e.errid], None)
     else:
+        # TODO: add exception
         pass
 
 

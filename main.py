@@ -215,6 +215,11 @@ class Engine:
         # Continue
         return 100
 
+    def gen_buffs(self):
+        data = {}
+        for i in range(len(self.buffs)):
+            data[BUFF_TABLE_REV[i]] = self.buffs[i]
+
     def dbg(self):
         print("Turn: " + str(self.turn))
         print(f"     Current | Total")

@@ -34,6 +34,7 @@ class EngineManager:
             "CurrentQuality": e.qlty_current,
             "CurrentCP": e.cp_current,
             "CurrentDurability": e.dura_current,
+            "CurrentStatus": e.status,
             "Buffs": e.gen_buffs(),
             "InnerQuiet": e.inner_quiet,
         }

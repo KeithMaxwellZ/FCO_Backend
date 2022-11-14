@@ -109,7 +109,7 @@ class PrudentSynthesis(ActionBase):
 
 class DelicateSynthesis(ActionBase):
     def __init__(self):
-        super().__init__("Groundwork", 10, 32, 1.0, 1.0, 1.0, -1)
+        super().__init__("Delicate Synthesis", 10, 32, 1.0, 1.0, 1.0, -1)
 
 
 # Touch actions
@@ -198,7 +198,7 @@ class WasteNotII(ActionBase):
 
 class Manipulation(ActionBase):
     def __init__(self):
-        super().__init__("Waste Not", 0, 96, 1.0, 0.0, 0.0, 38)
+        super().__init__("Manipulation", 0, 96, 1.0, 0.0, 0.0, 38)
 
 
 class Veneration(ActionBase):

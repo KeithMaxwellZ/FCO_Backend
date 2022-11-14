@@ -139,7 +139,7 @@ class Engine:
         # Check finish conditions
         r = self.finish_check()
 
-        if r == 0:  # Continue
+        if r == 100:  # Continue
             # Manipulation
             if self.buffs[3] > 0:
                 self.dura_current = (self.dura_current + 5) % self.dura_total
@@ -157,7 +157,8 @@ class Engine:
                 b = math.floor(create_buff / 10)
                 d = create_buff - b * 10
                 self.buffs[b] = d + (2 if self.status == status.PURPLE and b != 1 else 0)
-
+        if not success:
+            r += 1
         return r
 
     # 从桶老师帖子里毛来的（）

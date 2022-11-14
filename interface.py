@@ -35,7 +35,7 @@ class EngineManager:
             "CurrentCP": e.cp_current,
             "CurrentDurability": e.dura_current,
             "Buffs": e.gen_buffs(),
-            "Inner Quiet": e.inner_quiet,
+            "InnerQuiet": e.inner_quiet,
         }
         return json.dumps(payload)
 

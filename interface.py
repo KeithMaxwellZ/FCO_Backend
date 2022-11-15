@@ -1,6 +1,8 @@
 import json
 
 from flask import Flask, request
+
+import status
 from main import Engine
 from utils import EngineException
 import actions
@@ -43,6 +45,9 @@ class EngineManager:
     def use_action(self, userid, action_id):
         r = self.expert_engine[userid].use_action(actions.ACTIONS_ALL[action_id])
         return r
+
+
+em = EngineManager()
 
 
 def payload_gen(code, msg, data):
@@ -93,7 +98,7 @@ def engine(uid: int, cmd):
         except KeyError:
             return payload_gen(302, "Missing Action", None)
         except EngineException as e:
-            return payload_gen(310+e.errid, EngineException.EXCEPTIONS[e.errid], None)
+            return payload_gen(310 + e.errid, EngineException.EXCEPTIONS[e.errid], None)
     else:
         # TODO: add exception
         pass
@@ -105,5 +110,4 @@ def info(uid):
 
 
 if __name__ == '__main__':
-    em = EngineManager()
     app.run()

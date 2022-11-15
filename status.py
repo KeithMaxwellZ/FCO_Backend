@@ -19,7 +19,7 @@ YELLOW = Status("Centered", "yellow")
 CYAN = Status("Malleable", "cyan")
 BLUE = Status("Sturdy", "blue")
 PURPLE = Status("Primed", "purple")
-GREEN = Status("忘了", "green")
+GREEN = Status("Pliant", "green")
 
 BLACK = Status("Poor", "black")
 RAINBOW = Status("Excellent", "rainbow")

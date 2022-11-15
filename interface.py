@@ -36,10 +36,11 @@ class EngineManager:
             "CurrentQuality": e.qlty_current,
             "CurrentCP": e.cp_current,
             "CurrentDurability": e.dura_current,
-            "CurrentStatus": e.status,
+            "CurrentStatus": e.status.name,
             "Buffs": e.gen_buffs(),
             "InnerQuiet": e.inner_quiet,
         }
+        print(payload)
         return json.dumps(payload)
 
     def use_action(self, userid, action_id):
@@ -106,7 +107,10 @@ def engine(uid: int, cmd):
 
 @app.route('/engine/<int:uid>', methods=['GET'])
 def info(uid):
-    return payload_gen(200, "Success", em.get_info(uid))
+    print('aaa', uid)
+    r = payload_gen(200, "Success", em.get_info(uid))
+    print('bbb', r)
+    return r
 
 
 if __name__ == '__main__':

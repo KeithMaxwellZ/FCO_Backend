@@ -208,7 +208,7 @@ class Veneration(ActionBase):
 
 class GreatStrides(ActionBase):
     def __init__(self):
-        super().__init__("Great Strides", 0, 32, 1.0, 0.0, 0.0, 53)
+        super().__init__("Great Stride", 0, 32, 1.0, 0.0, 0.0, 53)
 
 
 class Innovation(ActionBase):
@@ -218,7 +218,7 @@ class Innovation(ActionBase):
 
 class Observe(ActionBase):
     def __init__(self):
-        super().__init__("Observe", 0, 7, 1.0, 0.0, 0.0, 11)
+        super().__init__("Observation", 0, 7, 1.0, 0.0, 0.0, 11)
 
 
 class TricksOfTheTrade(ActionBase):
@@ -244,7 +244,7 @@ class FinalAppraisal(ActionBase):
 
 class HeartAndSoul(ActionBase):
     def __init__(self):
-        super().__init__("Heart And Soul", 0, 0, 1.0, 0.0, 0.0, -1)
+        super().__init__("Heart and Soul", 0, 0, 1.0, 0.0, 0.0, -1)
 
     def check_success(self, engine):
         if engine.hsReady <= 0:

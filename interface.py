@@ -1,6 +1,7 @@
 import json
 
 from flask import Flask, request
+from flask_cors import CORS
 
 import status
 from main import Engine
@@ -8,6 +9,7 @@ from utils import EngineException
 import actions
 
 app = Flask(__name__)
+CORS(app, resources=r'/*')
 
 
 class EngineManager:

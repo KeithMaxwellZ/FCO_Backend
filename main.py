@@ -32,16 +32,16 @@ class Engine:
         check the comment for other args
         :param statusMode: see status.Status for available options
         """
-        self.prog_eff = progEff
-        self.qlty_eff = qltyEff
-        self.cp_total = cpTotal
-        self.dura_total = duraTotal
-        self.prog_total = progTotal
-        self.qlty_total = qltyTotal
-        self.prog_diff = progDiff
-        self.qlty_diff = qltyDiff
-        self.prog_lvl = progLvl
-        self.qlty_lvl = qltyLvl
+        self.prog_eff = int(progEff)
+        self.qlty_eff = int(qltyEff)
+        self.cp_total = int(cpTotal)
+        self.dura_total = int(duraTotal)
+        self.prog_total = int(progTotal)
+        self.qlty_total = int(qltyTotal)
+        self.prog_diff = int(progDiff) / 10
+        self.qlty_diff = int(qltyDiff) / 10
+        self.prog_lvl = int(progLvl) / 100
+        self.qlty_lvl = int(qltyLvl) / 100
 
         # Just in case TODO: need further data
         self.prog_lvl = 0.8
@@ -220,6 +220,7 @@ class Engine:
         data = {}
         for i in range(len(self.buffs)):
             data[BUFF_TABLE_REV[i]] = self.buffs[i]
+        return data
 
     def dbg(self):
         print("Turn: " + str(self.turn))

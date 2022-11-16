@@ -41,7 +41,7 @@ class EngineManager:
             "InnerQuiet": e.inner_quiet,
         }
         print(payload)
-        return json.dumps(payload)
+        return payload
 
     def use_action(self, userid, action_id):
         r = self.expert_engine[userid].use_action(actions.ACTIONS_ALL[action_id])
@@ -83,10 +83,10 @@ def engine(uid: int, cmd):
                 duraTotal=data['TotalDurability'],
                 progTotal=data['TotalProgress'],
                 qltyTotal=data['TotalQuality'],
-                progDiff=data['ProgressDifficulty'],
-                qltyDiff=data['QualityDifficulty'],
-                progLvl=data['ProgressLevel'],
-                qltyLvl=data['QualityLevel'],
+                progDiff=data['ProgressDivider'],
+                qltyDiff=data['QualityDivider'],
+                progLvl=data['ProgressModifier'],
+                qltyLvl=data['QualityModifier'],
                 statusMode=data['Mode']
             )
             return payload_gen(200, 'Success', None)

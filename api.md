@@ -110,19 +110,19 @@ HTTPS协议
 
 #### 2.3.1 请求参数
   
-| 参数名称                | 类型  | 描述       |
-|:--------------------|:----|:---------|
-| ProgressEfficiency  | int | 制作精度     |
-| QualityEfficiency   | int | 加工精度     |
-| TotalCP             | int | 制作力      |
-| TotalDurability     | int | 配方总耐久    |
-| TotalProgress       | int | 配方总进度    |
-| TotalQuality        | int | 配方总品质    |
-| ProgressDifficulty* | int | 配方进度压制难度 |
-| QualityDifficulty*  | int | 配方品质压制难度 |
-| ProgressLevel*      | int | 配方进度等级   |
-| QualityLevel*       | int | 配方品质等级   |
-| Mode**              | int | 模式       |
+| 参数名称               | 类型  | 描述       |
+|:-------------------|:----|:---------|
+| ProgressEfficiency | int | 制作精度     |
+| QualityEfficiency  | int | 加工精度     |
+| TotalCP            | int | 制作力      |
+| TotalDurability    | int | 配方总耐久    |
+| TotalProgress      | int | 配方总进度    |
+| TotalQuality       | int | 配方总品质    |
+| ProgressDivider*   | int | 配方作业难度系数 |
+| QualityDivider*    | int | 配方加工难度系数 |
+| ProgressModifier*  | int | 配方作业压制系数 |
+| QualityModifier*   | int | 配方加工压制系数 |
+| Mode**             | int | 模式       |
 
  /*  这四项数据如果是满级配方应该是有个固定值的，专家配方应该为(13, 11.5, 0.7, 0.6) 可能需要更多数据测试一下
 

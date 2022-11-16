@@ -145,14 +145,15 @@ class Engine:
                 if self.buffs[i] > 0:
                     self.buffs[i] -= 1
 
-            # Generate next status
-            self.status = self.status_manager.next_status()
-
             # Create buff if necessary
             if create_buff != -1:
                 b = math.floor(create_buff / 10)
                 d = create_buff - b * 10
-                self.buffs[b] = d + (2 if self.status == status.PURPLE and b != 1 else 0)
+                self.buffs[b] = d + (2 if (self.status == status.PURPLE and b != 1) else 0)
+
+            # Generate next status
+            self.status = self.status_manager.next_status()
+
         if not success:
             r += 1
         return r

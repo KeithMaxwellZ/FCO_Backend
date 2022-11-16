@@ -23,9 +23,9 @@ class EngineManager:
 
     def start(self, userid,
               progEff, qltyEff, cpTotal,
-              duraTotal, progTotal, qltyTotal, progDiff, qltyDiff, progLvl, qltyLvl, statusMode=2):
+              duraTotal, progTotal, qltyTotal, progDiv, qltyDiv, progMod, qltyMod, statusMode=2):
         self.expert_engine[userid] = Engine(progEff, qltyEff, cpTotal,
-                                            duraTotal, progTotal, qltyTotal, progDiff, qltyDiff, progLvl, qltyLvl,
+                                            duraTotal, progTotal, qltyTotal, progDiv, qltyDiv, progMod, qltyMod,
                                             statusMode=2)
 
     def get_info(self, userid):
@@ -83,10 +83,10 @@ def engine(uid: int, cmd):
                 duraTotal=data['TotalDurability'],
                 progTotal=data['TotalProgress'],
                 qltyTotal=data['TotalQuality'],
-                progDiff=data['ProgressDivider'],
-                qltyDiff=data['QualityDivider'],
-                progLvl=data['ProgressModifier'],
-                qltyLvl=data['QualityModifier'],
+                progDiv=data['ProgressDivider'],
+                qltyDiv=data['QualityDivider'],
+                progMod=data['ProgressModifier'],
+                qltyMod=data['QualityModifier'],
                 statusMode=data['Mode']
             )
             return payload_gen(200, 'Success', None)

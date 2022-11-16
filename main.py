@@ -26,7 +26,7 @@ class Engine:
     def __init__(
             self,
             progEff, qltyEff, cpTotal,
-            duraTotal, progTotal, qltyTotal, progDiff, qltyDiff, progLvl, qltyLvl,
+            duraTotal, progTotal, qltyTotal, progDiv, qltyDiv, progMod, qltyMod,
             statusMode=2):
         """
         check the comment for other args
@@ -38,14 +38,10 @@ class Engine:
         self.dura_total = int(duraTotal)
         self.prog_total = int(progTotal)
         self.qlty_total = int(qltyTotal)
-        self.prog_diff = int(progDiff) / 10
-        self.qlty_diff = int(qltyDiff) / 10
-        self.prog_lvl = int(progLvl) / 100
-        self.qlty_lvl = int(qltyLvl) / 100
-
-        # Just in case TODO: need further data
-        self.prog_lvl = 0.8
-        self.qlty_lvl = 0.7
+        self.prog_div = int(progDiv) / 10
+        self.qlty_div = int(qltyDiv) / 10
+        self.prog_mod = int(progMod) / 100
+        self.qlty_mod = int(qltyMod) / 100
 
         self.inner_quiet = 0  # Inner quiet level
         self.prog_current = 0  # Current progress
@@ -165,7 +161,7 @@ class Engine:
     def calculate_prog(self, prog_multiplier):
         # 作业进展=rounddown(基准进展(base)*效率系数(efficiency)*作业状态系数(status_const),0)
         # 基准进展=rounddown(作业压制系数(progLvl)*(作业精度(progEff)/作业难度系数(progDiff)+2),0)
-        base = self.prog_lvl * (self.prog_eff / self.prog_diff + 2)
+        base = self.prog_mod * (self.prog_eff / self.prog_div + 2)
         base = math.floor(base)
         buff = (1 if self.buffs[0] > 0 else 0) + (0.5 if self.buffs[4] > 0 else 0)
         self.buffs[0] = 0
@@ -177,7 +173,7 @@ class Engine:
     def calculate_qlty(self, qlty_multiplier):
         # 加工品质=rounddown(基准品质(base)*效率系数(efficiency)*内静系数(inner_quiet_efficiency)*品质状态系数(status_const),0)
         # 基准品质=rounddown(加工压制系数(qltyLvl)*(加工精度(qltyEff)/加工难度系数(qltyDiff)+35),0)
-        base = self.qlty_lvl * (self.qlty_eff / self.qlty_diff + 35)
+        base = self.qlty_mod * (self.qlty_eff / self.qlty_div + 35)
         base = math.floor(base)
         buff = (1 if self.buffs[5] > 0 else 0) + (0.5 if self.buffs[6] > 0 else 0)
         self.buffs[5] = 0

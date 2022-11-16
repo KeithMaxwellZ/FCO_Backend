@@ -138,13 +138,13 @@ HTTPS协议
   "TotalDurability": 80,
   "TotalProgress": 3000,
   "TotalQuality": 25565,
-  "ProgressDifficulty": 13,
-  "QualityDifficulty": 11.5,
-  "ProgressLevel": 1,
-  "QualityLevel": 1,
+  "ProgressDivider": 13,
+  "QualityDivider": 11.5,
+  "ProgressModifier": 1,
+  "QualityModifier": 1,
   "Mode": 2
 }
-}
+
 ```
 
 #### 2.3.2 返回结果

@@ -95,7 +95,17 @@ def engine(uid: int, cmd):
     elif cmd == "use-action":
         try:
             r = em.use_action(uid, data['Action'])
-            return payload_gen(200, 'Success', {"Action Result": r})
+            if r == 100:
+                msg = "技能成功"
+            elif r == 101:
+                msg = "技能失败"
+            elif r == 200:
+                msg = "制作成功"
+            elif r == -1:
+                msg = "制作失败"
+            else:
+                msg = "ERROR"
+            return payload_gen(200, msg, {"Action Result": r})
         except KeyError:
             return payload_gen(302, "Missing Action", None)
         except EngineException as e:

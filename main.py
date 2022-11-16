@@ -80,7 +80,8 @@ class Engine:
 
         # Some specifications
         if action == actions.ByregotsBlessing:
-            qim += 20 * self.inner_quiet
+            qim += 0.2 * self.inner_quiet
+            self.inner_quiet = 0
 
         if sr == 0:
             # Continue without progressing turn count
@@ -91,9 +92,15 @@ class Engine:
             pim, qim, dc, cc, sr, create_buff
         )
 
+        if action == actions.PreparatoryTouch:
+            self.inner_quiet += 1
+
         # Specifications (reflect provides extra inner quiet
         if action == actions.Reflect:
             self.inner_quiet += 1
+
+        if self.inner_quiet > 10:
+            self.inner_quiet = 10
 
         return r
 
@@ -110,8 +117,10 @@ class Engine:
         # Check if action is successful
         success = True
         if success_rate < 1:
-            success_rate += 0.25 if self.status == status.YELLOW else 0
-            success = random.randrange(0, 1) >= success_rate
+            success_rate += (0.25 if self.status == status.YELLOW else 0)
+            roll = random.randrange(0, 100, step=1) / 100
+            success = (roll <= success_rate)
+            print(roll, success)
 
         # Calculate progress and quality increment if success
         if success:
@@ -138,7 +147,7 @@ class Engine:
         if r == 100:  # Continue
             # Manipulation
             if self.buffs[3] > 0:
-                self.dura_current = (self.dura_current + 5) % self.dura_total
+                self.dura_current = min(self.dura_current + 5, self.dura_total)
 
             # Buff countdown
             for i in range(0, len(self.buffs)):

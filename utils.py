@@ -1,13 +1,13 @@
 BUFF_TABLE = {
     "Muscle Memory": 0,
-    "Observation": 1,
+    "Observer": 1,
     "Waste Not": 2,
     "Manipulation": 3,
     "Veneration": 4,
-    "Great Stride": 5,
+    "Great Strides": 5,
     "Innovation": 6,
     "Final Appraisal": 7,
-    "Heart and Soul": 8
+    "Heart And Soul": 8
 }
 
 BUFF_TABLE_REV = {
@@ -19,7 +19,7 @@ BUFF_TABLE_REV = {
     5: "Great Stride",
     6: "Innovation",
     7: "Final Appraisal",
-    8: "Heart and Soul"
+    8: "Heart And Soul"
 }
 
 

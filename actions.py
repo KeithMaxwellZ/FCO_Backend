@@ -229,15 +229,17 @@ class TricksOfTheTrade(ActionBase):
         if engine.status != status.RED:
             raise EngineException(2)
 
+        return 0
+
 
 class FinalAppraisal(ActionBase):
     def __init__(self):
         super().__init__("Final Appraisal", 0, 1, 1.0, 0.0, 0.0, -1)
 
     def check_success(self, engine):
-        if engine.hsReady <= 0:
-            raise EngineException(5)
-        engine.faReady -= 1
+        # if engine.faReady <= 0:
+        #     raise EngineException(5)
+        # engine.faReady -= 1
         engine.buffs[7] = 3
         return 0
 

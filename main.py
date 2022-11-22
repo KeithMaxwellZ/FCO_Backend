@@ -50,7 +50,7 @@ class Engine:
         self.dura_current = int(duraTotal)  # Current durability
         self.turn = 0  # Current turn
 
-        self.faReady = 1  # If Final Appraisal has been used
+        # self.faReady = 1  # If Final Appraisal has been used
         self.hsReady = 1  # If Heart and Soul has been used
         self.caReady = 3
 

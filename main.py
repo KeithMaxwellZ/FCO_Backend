@@ -78,6 +78,8 @@ class Engine:
         sr = action.check_success(self)
         create_buff = action.buff
 
+        curr_status = self.status
+
         # Some specifications
         if action == actions.ByregotsBlessing:
             qim += 0.2 * self.inner_quiet
@@ -92,11 +94,14 @@ class Engine:
             pim, qim, dc, cc, sr, create_buff
         )
 
-        if action == actions.PreparatoryTouch:
-            self.inner_quiet += 1
-
         # Specifications (reflect provides extra inner quiet
         if action == actions.Reflect:
+            self.inner_quiet += 1
+
+        if curr_status == status.RED and action == actions.PreciseTouch:
+            self.inner_quiet += 1
+
+        if action == actions.PreparatoryTouch:
             self.inner_quiet += 1
 
         if self.inner_quiet > 10:
@@ -159,6 +164,7 @@ class Engine:
                 b = math.floor(create_buff / 10)
                 d = create_buff - b * 10
                 self.buffs[b] = d + (2 if (self.status == status.PURPLE and b != 1) else 0)
+
 
             # Generate next status
             self.status = self.status_manager.next_status()

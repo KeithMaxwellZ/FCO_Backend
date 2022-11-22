@@ -119,9 +119,7 @@ def engine(uid: int, cmd):
 
 @app.route('/engine/<int:uid>', methods=['GET'])
 def info(uid):
-    print('aaa', uid)
     r = payload_gen(200, "Success", em.get_info(uid))
-    print('bbb', r)
     return r
 
 

@@ -42,7 +42,7 @@ class ActionBase:
 
 class MuscleMemory(ActionBase):
     def __init__(self):
-        super().__init__("Muscle Memory", 0, 6, 1.0, 3.0, 0.0, 5)
+        super().__init__("Muscle Memory", 10, 6, 1.0, 3.0, 0.0, 5)
 
     def check_success(self, engine):
         if engine.turn > 0:
@@ -52,7 +52,7 @@ class MuscleMemory(ActionBase):
 
 class Reflect(ActionBase):
     def __init__(self):
-        super().__init__("Reflect", 0, 6, 1.0, 0.0, 1.0, -1)
+        super().__init__("Reflect", 10, 6, 1.0, 0.0, 1.0, -1)
 
     def check_success(self, engine):
         if engine.turn > 0:
@@ -171,7 +171,7 @@ class AdvancedTouch(ActionBase):
 
 class TrainedFinesse(ActionBase):
     def __init__(self):
-        super().__init__("Trained Finesse", 10, 32, 1.0, 0.0, 1.25, -1)
+        super().__init__("Trained Finesse", 0, 32, 1.0, 0.0, 1.25, -1)
 
     def check_success(self, engine):
         if engine.inner_quiet < 10:
@@ -242,7 +242,8 @@ class FinalAppraisal(ActionBase):
         # if engine.faReady <= 0:
         #     raise EngineException(5)
         # engine.faReady -= 1
-        engine.buffs[7] = 3
+        engine.cp_current -= 1
+        engine.buffs[7] = 5
         return 0
 
 

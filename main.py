@@ -211,7 +211,7 @@ class Engine:
         )
 
     def finish_check(self):
-        if self.qlty_current >= self.qlty_total:
+        if self.prog_current >= self.prog_total:
             # Success
             self.finished = True
             return 200

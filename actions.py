@@ -42,7 +42,7 @@ class ActionBase:
 
 class MuscleMemory(ActionBase):
     def __init__(self):
-        super().__init__("Muscle Memory", 6, 6, 1.0, 3.0, 0.0, 5)
+        super().__init__("Muscle Memory", 0, 6, 1.0, 3.0, 0.0, 5)
 
     def check_success(self, engine):
         if engine.turn > 0:
@@ -52,7 +52,7 @@ class MuscleMemory(ActionBase):
 
 class Reflect(ActionBase):
     def __init__(self):
-        super().__init__("Reflect", 6, 6, 1.0, 0.0, 1.0, -1)
+        super().__init__("Reflect", 0, 6, 1.0, 0.0, 1.0, -1)
 
     def check_success(self, engine):
         if engine.turn > 0:
@@ -176,6 +176,7 @@ class TrainedFinesse(ActionBase):
     def check_success(self, engine):
         if engine.inner_quiet < 10:
             raise EngineException(3)
+        return self.success_rate
 
 
 class MastersMend(ActionBase):
@@ -184,7 +185,7 @@ class MastersMend(ActionBase):
 
     def check_success(self, engine):
         engine.dura_current = min((engine.dura_current + 30), engine.dura_total)
-        return 0
+        return self.success_rate
 
 
 class WasteNot(ActionBase):
@@ -230,7 +231,7 @@ class TricksOfTheTrade(ActionBase):
         if engine.status != status.RED:
             raise EngineException(2)
         engine.cp_current = min(engine.cp_current + 20, engine.cp_total)
-        return 0
+        return self.success_rate
 
 
 class FinalAppraisal(ActionBase):

@@ -202,6 +202,10 @@ class Manipulation(ActionBase):
     def __init__(self):
         super().__init__("Manipulation", 0, 96, 1.0, 0.0, 0.0, 38)
 
+    def check_success(self, engine):
+        engine.buffs[3] = 0
+        return self.success_rate
+
 
 class Veneration(ActionBase):
     def __init__(self):

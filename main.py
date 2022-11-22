@@ -165,7 +165,6 @@ class Engine:
                 d = create_buff - b * 10
                 self.buffs[b] = d + (2 if (self.status == status.PURPLE and b != 1) else 0)
 
-
             # Generate next status
             self.status = self.status_manager.next_status()
 

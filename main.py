@@ -46,8 +46,8 @@ class Engine:
         self.inner_quiet = 0  # Inner quiet level
         self.prog_current = 0  # Current progress
         self.qlty_current = 0  # Current quality
-        self.cp_current = cpTotal  # Current cp
-        self.dura_current = duraTotal  # Current durability
+        self.cp_current = int(cpTotal)  # Current cp
+        self.dura_current = int(duraTotal)  # Current durability
         self.turn = 0  # Current turn
 
         self.faReady = 1  # If Final Appraisal has been used

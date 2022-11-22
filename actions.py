@@ -183,7 +183,8 @@ class MastersMend(ActionBase):
         super().__init__("Master's Mend", 0, 88, 1.0, 0.0, 0.0, -1)
 
     def check_success(self, engine):
-        engine.dura_current = (engine.dura_current + 30) % engine.dura_total
+        engine.dura_current = min((engine.dura_current + 30), engine.dura_total)
+        return 0
 
 
 class WasteNot(ActionBase):
@@ -228,7 +229,7 @@ class TricksOfTheTrade(ActionBase):
     def check_success(self, engine):
         if engine.status != status.RED:
             raise EngineException(2)
-
+        engine.cp_current = min(engine.cp_current + 20, engine.cp_total)
         return 0
 
 

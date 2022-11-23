@@ -94,17 +94,18 @@ class Engine:
         )
 
         # Specifications (reflect provides extra inner quiet
-        if action == actions.ByregotsBlessing:
-            self.inner_quiet = 0
+        if r == 100:
+            if action == actions.ByregotsBlessing:
+                self.inner_quiet = 0
 
-        if action == actions.Reflect:
-            self.inner_quiet += 1
+            if action == actions.Reflect:
+                self.inner_quiet += 1
 
-        if curr_status == status.RED and action == actions.PreciseTouch:
-            self.inner_quiet += 1
+            if curr_status == status.RED and action == actions.PreciseTouch:
+                self.inner_quiet += 1
 
-        if action == actions.PreparatoryTouch:
-            self.inner_quiet += 1
+            if action == actions.PreparatoryTouch:
+                self.inner_quiet += 1
 
         if self.inner_quiet > 10:
             self.inner_quiet = 10

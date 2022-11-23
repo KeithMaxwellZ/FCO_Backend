@@ -106,6 +106,11 @@ class PrudentSynthesis(ActionBase):
     def __init__(self):
         super().__init__("Prudent Synthesis", 5, 18, 1.0, 1.8, 0.0, -1)
 
+    def check_success(self, engine):
+        if engine.buffs[2] > 0:
+            raise EngineException(6)
+        return self.success_rate
+
 
 class DelicateSynthesis(ActionBase):
     def __init__(self):
@@ -149,6 +154,11 @@ class PreciseTouch(ActionBase):
 class PrudentTouch(ActionBase):
     def __init__(self):
         super().__init__("Prudent Touch", 5, 25, 1.0, 0.0, 1.0, -1)
+
+    def check_success(self, engine):
+        if engine.buffs[2] > 0:
+            raise EngineException(6)
+        return self.success_rate
 
 
 class FocusedTouch(ActionBase):

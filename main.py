@@ -84,6 +84,9 @@ class Engine:
         if action == actions.ByregotsBlessing:
             qim += 0.2 * self.inner_quiet
 
+        if action == actions.Groundwork and self.dura_current - self.calculate_durability(dc) < 0:
+            pim = pim / 2
+
         if sr == 0:
             # Continue without progressing turn count
             return 100
@@ -98,13 +101,13 @@ class Engine:
             if action == actions.ByregotsBlessing:
                 self.inner_quiet = 0
 
-            if action == actions.Reflect:
+            elif action == actions.Reflect:
                 self.inner_quiet += 1
 
-            if action == actions.PreciseTouch:
+            elif action == actions.PreciseTouch:
                 self.inner_quiet += 1
 
-            if action == actions.PreparatoryTouch:
+            elif action == actions.PreparatoryTouch:
                 self.inner_quiet += 1
 
         if self.inner_quiet > 10:

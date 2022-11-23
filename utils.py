@@ -31,6 +31,7 @@ class EngineException(Exception):
         "Inner Quiet < 10",
         "No enough CP",
         "Already Used"
+        "Can't use under Waste Not buff"
     ]
 
     def __init__(self, errid):

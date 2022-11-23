@@ -30,7 +30,7 @@ class EngineException(Exception):
         "Not HQ",
         "Inner Quiet < 10",
         "No enough CP",
-        "Already Used"
+        "Already Used",
         "Can't use under Waste Not buff"
     ]
 

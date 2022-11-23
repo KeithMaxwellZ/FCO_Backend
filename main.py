@@ -101,7 +101,7 @@ class Engine:
             if action == actions.Reflect:
                 self.inner_quiet += 1
 
-            if curr_status == status.RED and action == actions.PreciseTouch:
+            if action == actions.PreciseTouch:
                 self.inner_quiet += 1
 
             if action == actions.PreparatoryTouch:

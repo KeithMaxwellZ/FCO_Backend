@@ -130,7 +130,7 @@ class StandardTouch(ActionBase):
 
 class ByregotsBlessing(ActionBase):
     def __init__(self):
-        super().__init__("Byregots Blessing", 10, 32, 1.0, 0.0, 1.0, -1)
+        super().__init__("Byregots Blessing", 10, 24, 1.0, 0.0, 1.0, -1)
 
 
 class PreciseTouch(ActionBase):

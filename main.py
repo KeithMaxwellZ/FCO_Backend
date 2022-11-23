@@ -83,7 +83,6 @@ class Engine:
         # Some specifications
         if action == actions.ByregotsBlessing:
             qim += 0.2 * self.inner_quiet
-            self.inner_quiet = 0
 
         if sr == 0:
             # Continue without progressing turn count
@@ -95,6 +94,9 @@ class Engine:
         )
 
         # Specifications (reflect provides extra inner quiet
+        if action == actions.ByregotsBlessing:
+            self.inner_quiet = 0
+
         if action == actions.Reflect:
             self.inner_quiet += 1
 
@@ -146,6 +148,7 @@ class Engine:
         self.cp_current -= cp_res
         self.dura_current -= dura_res
 
+        print(prog_res, qlty_res)
         # Check finish conditions
         r = self.finish_check()
 

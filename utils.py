@@ -25,13 +25,13 @@ BUFF_TABLE_REV = {
 
 class EngineException(Exception):
     EXCEPTIONS = [
-        "Finished",
-        "Not 1st turn",
-        "Not HQ",
-        "Inner Quiet < 10",
-        "No enough CP",
-        "Already Used",
-        "Can't use under Waste Not buff"
+        "ERROR：已完成制作",
+        "ERROR：当前非首回合，无法使用该技能",
+        "ERROR：非“高品质”状态，无法使用该技能",
+        "ERROR：“内静”不足10层，无法使用该技能",
+        "ERROR：制作力不足，无法使用该技能",
+        "ERROR：在本次制作中已经使用过该技能，无法再次使用"
+        "ERROR：无法在“俭约”状态下使用该技能"
     ]
 
     def __init__(self, errid):

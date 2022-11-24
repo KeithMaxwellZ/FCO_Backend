@@ -40,6 +40,7 @@ class EngineManager:
     def start(self, userid,
               progEff, qltyEff, cpTotal,
               duraTotal, progTotal, qltyTotal, progDiv, qltyDiv, progMod, qltyMod, statusMode=2):
+        userid = str(userid)
         self.expert_engine[userid] = Engine(progEff, qltyEff, cpTotal,
                                             duraTotal, progTotal, qltyTotal, progDiv, qltyDiv, progMod, qltyMod,
                                             statusMode=2)

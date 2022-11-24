@@ -16,7 +16,6 @@ CORS(app, resources=r'/*')
 class EngineManager:
     def __init__(self):
         self.expert_engine = {}
-        self.c = 0
 
         if not os.path.isdir("./sessions"):
             os.mkdir("./sessions")
@@ -29,6 +28,8 @@ class EngineManager:
                 data = json.load(f)
             self.expert_engine[sid].load_data(data)
             print(i)
+
+        self.c = len(self.expert_engine)
 
     def init(self):
         uid = str(self.c)

@@ -240,6 +240,65 @@ class Engine:
             data[BUFF_TABLE_REV[i]] = self.buffs[i]
         return data
 
+    def save_data(self):
+        payload = {
+            "prog_eff": self.prog_eff,
+            "qlty_eff": self.qlty_eff,
+            "cp_total": self.cp_total,
+            "dura_total": self.dura_total,
+            "prog_total": self.prog_total,
+            "qlty_total": self.qlty_total,
+            "prog_div": self.prog_div,
+            "qlty_div": self.qlty_div,
+            "prog_mod": self.prog_mod,
+            "qlty_mod": self.qlty_mod,
+            "inner_quiet": self.inner_quiet,
+            "prog_current": self.prog_current,
+            "qlty_current": self.qlty_current,
+            "cp_current": self.cp_current,
+            "dura_current": self.dura_current,
+            "turn": self.turn,
+            "hsReady": self.hsReady,
+            "caReady": self.caReady,
+            "finished": self.finished,
+            "buffs": self.buffs,
+            "status": self.status.color,
+            "status_mode": self.status_manager.mode
+        }
+
+        return payload
+
+    def load_data(self, payload):
+        self.prog_eff = int(payload['prog_eff'])
+        self.qlty_eff = int(payload['qlty_eff'])
+        self.cp_total = int(payload['cp_total'])
+        self.dura_total = int(payload['dura_total'])
+        self.prog_total = int(payload['prog_total'])
+        self.qlty_total = int(payload['qlty_total'])
+        self.prog_div = int(payload['prog_div'])
+        self.qlty_div = int(payload['qlty_div'])
+        self.prog_mod = int(payload['prog_mod'])
+        self.qlty_mod = int(payload['qlty_mod'])
+
+        self.inner_quiet = int(payload['inner_quiet'])
+        self.prog_current = int(payload['prog_current'])
+        self.qlty_current = int(payload['qlty_current'])
+        self.cp_current = int(payload['cp_current'])
+        self.dura_current = int(payload['dura_current'])
+        self.turn = int(payload['turn'])
+
+        self.hsReady = int(payload['hsReady'])
+        self.caReady = int(payload['caReady'])
+
+        self.finished = payload['finished']
+
+        self.buffs = payload['buffs']
+
+        self.status = status.STATUS_REF[payload['status']]
+
+        self.status_manager = status.StatusManager(int(payload['status_mode']))
+
+
     def dbg(self):
         print("Turn: " + str(self.turn))
         print(f"     Current | Total")

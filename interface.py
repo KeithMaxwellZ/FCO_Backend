@@ -1,4 +1,5 @@
 import json
+import os
 
 from flask import Flask, request
 from flask_cors import CORS
@@ -17,8 +18,20 @@ class EngineManager:
         self.expert_engine = {}
         self.c = 0
 
+        if not os.path.isdir("./sessions"):
+            os.mkdir("./sessions")
+
+        for i in os.listdir("./sessions"):
+            t = i.split("_")
+            sid = t[0]
+            self.expert_engine[sid] = Engine(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2)
+            with open(f"./sessions/{i}", 'r') as f:
+                data = json.load(f)
+            self.expert_engine[sid].load_data(data)
+            print(i)
+
     def init(self):
-        uid = self.c
+        uid = str(self.c)
         self.expert_engine[uid] = None
         self.c += 1
         return uid
@@ -32,6 +45,7 @@ class EngineManager:
 
     def get_info(self, userid):
         e: Engine
+        userid = str(userid)
         e = self.expert_engine[userid]
         payload = {
             "CurrentProgress": e.prog_current,
@@ -46,7 +60,11 @@ class EngineManager:
         return payload
 
     def use_action(self, userid, action_id):
+        userid = str(userid)
         r = self.expert_engine[userid].use_action(actions.ACTIONS_ALL[action_id])
+        pl = self.expert_engine[userid].save_data()
+        with open(f"./sessions/{userid}_session.json", 'w') as f:
+            json.dump(pl, f)
         return r
 
 

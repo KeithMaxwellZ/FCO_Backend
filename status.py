@@ -25,6 +25,17 @@ BLACK = Status("Poor", "black")
 RAINBOW = Status("Excellent", "rainbow")
 
 
+STATUS_REF = {
+    'white': WHITE,
+    'red': RED,
+    'yellow': YELLOW,
+    'cyan': CYAN,
+    'blue': BLUE,
+    'purple': PURPLE,
+    'green': GREEN
+}
+
+
 class StatusManager:
     BASIC = 0
     NORMAL = 1
@@ -34,7 +45,6 @@ class StatusManager:
 
     def __init__(self, mode=2):
         """
-
         :param mode: Crafting mode
         """
         self.last = WHITE

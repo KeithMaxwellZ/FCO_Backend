@@ -39,6 +39,8 @@ class ActionBase:
     def __str__(self):
         return self.name
 
+    def __repr__(self):
+        return self.name
 
 class MuscleMemory(ActionBase):
     def __init__(self):
@@ -181,7 +183,7 @@ class AdvancedTouch(ActionBase):
 
 class TrainedFinesse(ActionBase):
     def __init__(self):
-        super().__init__("Trained Finesse", 0, 32, 1.0, 0.0, 1.25, -1)
+        super().__init__("Trained Finesse", 0, 32, 1.0, 0.0, 1.00, -1)
 
     def check_success(self, engine):
         if engine.inner_quiet < 10:
@@ -316,6 +318,7 @@ Observe = Observe()
 TricksOfTheTrade = TricksOfTheTrade()
 FinalAppraisal = FinalAppraisal()
 HeartAndSoul = HeartAndSoul()
+CarefulObservation = CarefulObservation()
 
 if __name__ == '__main__':
     print(ACTIONS_ALL)

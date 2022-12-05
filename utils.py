@@ -1,6 +1,6 @@
 BUFF_TABLE = {
     "Muscle Memory": 0,
-    "Observer": 1,
+    "Observation": 1,
     "Waste Not": 2,
     "Manipulation": 3,
     "Veneration": 4,

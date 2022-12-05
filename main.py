@@ -65,7 +65,6 @@ class Engine:
         self.status_manager = status.StatusManager(statusMode)
 
     def use_action(self, action: ActionBase):
-        print(action.name)
         # Check if crafting is finished
         if self.finished:
             raise EngineException(0)
@@ -131,13 +130,14 @@ class Engine:
             success_rate += (0.25 if self.status == status.YELLOW else 0)
             roll = random.randrange(0, 100, step=1) / 100
             success = (roll <= success_rate)
-            print(roll, success)
+            # print(roll, success)
 
         # Calculate progress and quality increment if success
         if success:
             if prog_multiplier > 0:
                 prog_res = self.calculate_prog(prog_multiplier)
                 self.prog_current += prog_res
+                self.prog_current = min(self.prog_current, self.prog_total)
 
                 # Check final Appraisal
                 if self.prog_current > self.prog_total and self.buffs[7] > 0:
@@ -146,13 +146,13 @@ class Engine:
             if qlty_multiplier > 0:
                 qlty_res = self.calculate_qlty(qlty_multiplier)
                 self.qlty_current += qlty_res
+                self.qlty_current = min(self.qlty_current, self.qlty_total)
 
         # Modify current data
 
         self.cp_current -= cp_res
         self.dura_current -= dura_res
 
-        print(prog_res, qlty_res)
         # Check finish conditions
         r = self.finish_check()
 
@@ -180,46 +180,49 @@ class Engine:
         return r
 
     # 从桶老师帖子里毛来的（）
-    def calculate_prog(self, prog_multiplier):
+    def calculate_prog(self, prog_multiplier, predict=False):
         # 作业进展=rounddown(基准进展(base)*效率系数(efficiency)*作业状态系数(status_const),0)
         # 基准进展=rounddown(作业压制系数(progLvl)*(作业精度(progEff)/作业难度系数(progDiff)+2),0)
         base = self.prog_mod * (self.prog_eff / self.prog_div + 2)
         base = math.floor(base)
         buff = (1 if self.buffs[0] > 0 else 0) + (0.5 if self.buffs[4] > 0 else 0)
-        self.buffs[0] = 0
+        if not predict:
+            self.buffs[0] = 0
         status_const = 1.5 if self.status == status.CYAN else 1
         efficiency = prog_multiplier * (1 + buff)
         return math.floor(base * efficiency * status_const)
 
     # 也是从桶老师帖子里毛来的（）
-    def calculate_qlty(self, qlty_multiplier):
+    def calculate_qlty(self, qlty_multiplier, predict=False):
         # 加工品质=rounddown(基准品质(base)*效率系数(efficiency)*内静系数(inner_quiet_efficiency)*品质状态系数(status_const),0)
         # 基准品质=rounddown(加工压制系数(qltyLvl)*(加工精度(qltyEff)/加工难度系数(qltyDiff)+35),0)
         base = self.qlty_mod * (self.qlty_eff / self.qlty_div + 35)
         base = math.floor(base)
         buff = (1 if self.buffs[5] > 0 else 0) + (0.5 if self.buffs[6] > 0 else 0)
-        self.buffs[5] = 0
+        if not predict:
+            self.buffs[5] = 0
         status_const = 1.5 if self.status == status.RED else 1
         efficiency = qlty_multiplier * (1 + buff)
         inner_quiet_efficiency = 1 + 0.1 * self.inner_quiet
-        self.inner_quiet += 1
+        if not predict:
+            self.inner_quiet += 1
         return math.floor(base * efficiency * inner_quiet_efficiency * status_const)
 
     def calculate_durability(self, durability_cost):
         return math.floor(
-            durability_cost *                               # Base durability cost
-            (0.5 if self.buffs[2] > 0 else 1) *             # Efficiency from buff
-            (0.5 if self.status == status.BLUE else 1) +    # Efficiency from status
-            0.5                                             # Modification for rounding
+            durability_cost *  # Base durability cost
+            (0.5 if self.buffs[2] > 0 else 1) *  # Efficiency from buff
+            (0.5 if self.status == status.BLUE else 1) +  # Efficiency from status
+            0.5  # Modification for rounding
         )
 
     def calculate_cp(self, cp_cost):
         if cp_cost > self.cp_current:
             raise EngineException(4)
         return math.floor(
-            cp_cost *                                       # Base cp cost
-            (0.5 if self.status == status.GREEN else 1) +   # Efficiency from status
-            0.5                                             # Modification for rounding
+            cp_cost *  # Base cp cost
+            (0.5 if self.status == status.GREEN else 1) +  # Efficiency from status
+            0.5  # Modification for rounding
         )
 
     def finish_check(self):
@@ -298,7 +301,6 @@ class Engine:
 
         self.status_manager = status.StatusManager(int(payload['status_mode']))
 
-
     def dbg(self):
         print("Turn: " + str(self.turn))
         print(f"     Current | Total")
@@ -309,6 +311,35 @@ class Engine:
             if self.buffs[i] != 0:
                 print(f"{BUFF_TABLE_REV[i]}: {self.buffs[i]}")
         print("=====================")
+
+    def predict(self, action: ActionBase):
+        prog_multiplier = action.progress_multiplier
+        qlty_multiplier = action.quality_multiplier
+        dc = action.durability_cost
+        cc = action.cp_cost
+        sr = action.check_success(self)
+        create_buff = action.buff
+
+        # Some specifications
+        if action == actions.ByregotsBlessing:
+            qlty_multiplier += 0.2 * self.inner_quiet
+
+        if action == actions.Groundwork and self.dura_current - self.calculate_durability(dc) < 0:
+            pim = prog_multiplier / 2
+
+        if sr == 0:
+            # Continue without progressing turn count
+            return 100
+
+        prog_res = 0
+        qlty_res = 0
+
+        if prog_multiplier > 0:
+            prog_res = self.calculate_prog(prog_multiplier, predict=True)
+        if qlty_multiplier > 0:
+            qlty_res = self.calculate_qlty(qlty_multiplier, predict=True)
+
+        return prog_res, qlty_res
 
 
 if __name__ == '__main__':

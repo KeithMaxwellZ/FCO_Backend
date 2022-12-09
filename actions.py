@@ -202,7 +202,7 @@ class MastersMend(ActionBase):
 
 class WasteNot(ActionBase):
     def __init__(self):
-        super().__init__("Waste Not", 0, 58, 1.0, 0.0, 0.0, 24)
+        super().__init__("Waste Not", 0, 56, 1.0, 0.0, 0.0, 24)
 
 
 class WasteNotII(ActionBase):

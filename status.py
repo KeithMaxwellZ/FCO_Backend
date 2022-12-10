@@ -3,7 +3,7 @@ import random
 
 
 class Status:
-    def __init__(self, name, color):
+    def __init__(self, name, color, rate):
         """
         class for crafting status
         :param name: name of the status
@@ -11,18 +11,19 @@ class Status:
         """
         self.name = name
         self.color = color
+        self.rate = rate
 
 
-WHITE = Status("normal", "white")
-RED = Status("HQ", "red")
-YELLOW = Status("Centered", "yellow")
-CYAN = Status("Malleable", "cyan")
-BLUE = Status("Sturdy", "blue")
-PURPLE = Status("Primed", "purple")
-GREEN = Status("Pliant", "green")
+WHITE = Status("normal", "white", -1)
+RED = Status("HQ", "red", 12)
+YELLOW = Status("Centered", "yellow", 15)
+CYAN = Status("Malleable", "cyan", 12)
+BLUE = Status("Sturdy", "blue", 15)
+PURPLE = Status("Primed", "purple", 12)
+GREEN = Status("Pliant", "green", 12)
 
-BLACK = Status("Poor", "black")
-RAINBOW = Status("Excellent", "rainbow")
+BLACK = Status("Poor", "black", -1)
+RAINBOW = Status("Excellent", "rainbow", -1)
 
 
 STATUS_REF = {
@@ -41,7 +42,7 @@ class StatusManager:
     NORMAL = 1
     HARD = 2
     NORMAL_STATUS = [WHITE, RED, BLACK, RAINBOW]
-    HARD_STATUS = [WHITE, RED, YELLOW, CYAN, BLUE, PURPLE]
+    HARD_STATUS = [RED, YELLOW, CYAN, BLUE, PURPLE]
 
     def __init__(self, mode=2):
         """
@@ -49,6 +50,15 @@ class StatusManager:
         """
         self.last = WHITE
         self.mode = mode
+
+        self.table = []
+
+        if mode == 2:
+            for i in self.HARD_STATUS:
+                for j in range(i.rate):
+                    self.table.append(i)
+        while len(self.table) < 100:
+            self.table.append(WHITE)
 
     def next_status(self):
         if self.mode == 0:
@@ -68,7 +78,6 @@ class StatusManager:
             return next_status
         elif self.mode == 2:
             # Evenly distributed TODO: need some data
-            r = math.floor(random.random() * len(StatusManager.HARD_STATUS))
-            self.last = StatusManager.HARD_STATUS[r]
-            return self.last
+            r = random.randint(0, 99)
+            return self.table[r]
 

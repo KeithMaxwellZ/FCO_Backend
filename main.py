@@ -140,13 +140,14 @@ class Engine:
                 self.prog_current = min(self.prog_current, self.prog_total)
 
                 # Check final Appraisal
-                if self.prog_current > self.prog_total and self.buffs[7] > 0:
+                if self.prog_current >= self.prog_total and self.buffs[7] > 0:
                     self.prog_current = self.prog_total - 1
                     self.buffs[7] = 0
             if qlty_multiplier > 0:
                 qlty_res = self.calculate_qlty(qlty_multiplier)
                 self.qlty_current += qlty_res
                 self.qlty_current = min(self.qlty_current, self.qlty_total)
+            print(self.prog_current, self.buffs)
 
         # Modify current data
 

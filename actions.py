@@ -146,7 +146,7 @@ class PreciseTouch(ActionBase):
 
     def check_success(self, engine):
         if engine.status != status.RED:
-            if engine.buffs[8] > 0:
+            if engine.buffs[8] > 0 and engine.cp_current >= self.cp_cost:
                 engine.buffs[8] = 0
             else:
                 raise EngineException(2)
@@ -245,7 +245,10 @@ class TricksOfTheTrade(ActionBase):
 
     def check_success(self, engine):
         if engine.status != status.RED:
-            raise EngineException(2)
+            if engine.buffs[8] > 0 and engine.cp_current >= self.cp_cost:
+                engine.buffs[8] = 0
+            else:
+                raise EngineException(2)
         engine.cp_current = min(engine.cp_current + 20, engine.cp_total)
         return self.success_rate
 

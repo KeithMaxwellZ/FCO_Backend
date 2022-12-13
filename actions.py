@@ -96,7 +96,7 @@ class IntensiveSynthesis(ActionBase):
         super().__init__("Intensive Synthesis", 10, 6, 1.0, 4.0, 0.0, -1)
 
     def check_success(self, engine):
-        if engine.status != status.RED:
+        if engine.status != status.RED and engine.cp_current >= self.cp_cost:
             if engine.buffs[8] > 0:
                 engine.buffs[8] = 0
             else:
@@ -245,7 +245,7 @@ class TricksOfTheTrade(ActionBase):
 
     def check_success(self, engine):
         if engine.status != status.RED:
-            if engine.buffs[8] > 0 and engine.cp_current >= self.cp_cost:
+            if engine.buffs[8] > 0:
                 engine.buffs[8] = 0
             else:
                 raise EngineException(2)

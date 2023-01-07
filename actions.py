@@ -36,6 +36,9 @@ class ActionBase:
         """
         return self.success_rate
 
+    def get_cp(self, engine):
+        return self.cp_cost
+
     def __str__(self):
         return self.name
 
@@ -135,6 +138,12 @@ class StandardTouch(ActionBase):
     def __init__(self):
         super().__init__("Standard Touch", 10, 32, 1.0, 0.0, 1.25, -1)
 
+    def get_cp(self, engine):
+        if engine.touchCombo == 1:
+            return 18
+        else:
+            return self.cp_cost
+
 
 class ByregotsBlessing(ActionBase):
     def __init__(self):
@@ -182,6 +191,11 @@ class AdvancedTouch(ActionBase):
     def __init__(self):
         super().__init__("Advanced Touch", 10, 46, 1.0, 0.0, 1.5, -1)
 
+    def get_cp(self, engine):
+        if engine.touchCombo == 2:
+            return 18
+        else:
+            return self.cp_cost
 
 class TrainedFinesse(ActionBase):
     def __init__(self):

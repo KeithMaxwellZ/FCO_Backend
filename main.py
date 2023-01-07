@@ -54,6 +54,8 @@ class Engine:
         self.hsReady = 1  # If Heart and Soul has been used
         self.caReady = 3
 
+        self.touchCombo = 0
+
         self.finished = False  # If crafting is finished
 
         # Duration of buffs
@@ -73,7 +75,7 @@ class Engine:
         pim = action.progress_multiplier
         qim = action.quality_multiplier
         dc = action.durability_cost
-        cc = action.cp_cost
+        cc = action.get_cp(self)
         sr = action.check_success(self)
         create_buff = action.buff
 
@@ -108,6 +110,13 @@ class Engine:
 
             elif action == actions.PreparatoryTouch:
                 self.inner_quiet += 1
+
+            if action == actions.BasicTouch:
+                self.touchCombo = 1
+            elif action == actions.AdvancedTouch and self.touchCombo == 1:
+                self.touchCombo = 2
+            else:
+                self.touchCombo = 0
 
         if self.inner_quiet > 10:
             self.inner_quiet = 10

@@ -113,7 +113,7 @@ class Engine:
 
             if action == actions.BasicTouch:
                 self.touchCombo = 1
-            elif action == actions.AdvancedTouch and self.touchCombo == 1:
+            elif action == actions.StandardTouch and self.touchCombo == 1:
                 self.touchCombo = 2
             else:
                 self.touchCombo = 0

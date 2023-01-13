@@ -36,6 +36,7 @@ STATUS_REF = {
     'green': GREEN
 }
 
+ORDER = [BLUE, PURPLE, GREEN, BLUE, YELLOW, BLACK, RAINBOW, RED, WHITE]
 
 class StatusManager:
     BASIC = 0
@@ -53,10 +54,12 @@ class StatusManager:
 
         self.table = []
 
-        if mode == 2:
-            for i in self.HARD_STATUS:
-                for j in range(i.rate):
-                    self.table.append(i)
+        if mode > 1:
+            bin_arr = "{0:b}".format(mode).zfill(len(ORDER))
+            for i in range(len(ORDER)):
+                if bin_arr[i] == '1':
+                    for j in range(ORDER[i].rate):
+                        self.table.append(i)
         while len(self.table) < 100:
             self.table.append(WHITE)
 
@@ -77,7 +80,6 @@ class StatusManager:
             self.last = next_status
             return next_status
         elif self.mode == 2:
-            # Evenly distributed TODO: need some data
             r = random.randint(0, 99)
             return self.table[r]
 

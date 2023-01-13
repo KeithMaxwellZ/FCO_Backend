@@ -43,7 +43,7 @@ class EngineManager:
         userid = str(userid)
         self.expert_engine[userid] = Engine(progEff, qltyEff, cpTotal,
                                             duraTotal, progTotal, qltyTotal, progDiv, qltyDiv, progMod, qltyMod,
-                                            statusMode=2)
+                                            statusMode=statusMode)
 
     def get_info(self, userid):
         e: Engine

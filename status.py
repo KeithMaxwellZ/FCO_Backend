@@ -36,7 +36,7 @@ STATUS_REF = {
     'green': GREEN
 }
 
-ORDER = [BLUE, PURPLE, GREEN, BLUE, YELLOW, BLACK, RAINBOW, RED, WHITE]
+ORDER = [CYAN, PURPLE, GREEN, BLUE, YELLOW, BLACK, RAINBOW, RED, WHITE]
 
 class StatusManager:
     BASIC = 0
@@ -59,7 +59,7 @@ class StatusManager:
             for i in range(len(ORDER)):
                 if bin_arr[i] == '1':
                     for j in range(ORDER[i].rate):
-                        self.table.append(i)
+                        self.table.append(ORDER[i])
         while len(self.table) < 100:
             self.table.append(WHITE)
 
@@ -79,7 +79,7 @@ class StatusManager:
                 next_status = WHITE
             self.last = next_status
             return next_status
-        elif self.mode == 2:
+        else:
             r = random.randint(0, 99)
             return self.table[r]
 

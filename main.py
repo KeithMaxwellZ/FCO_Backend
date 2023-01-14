@@ -64,7 +64,7 @@ class Engine:
         self.status = status.WHITE  # Current crafting status
 
         # Instance ofStatus Manager
-        self.status_manager = status.StatusManager(statusMode)
+        self.status_manager = status.StatusManager(int(statusMode))
 
     def use_action(self, action: ActionBase):
         # Check if crafting is finished

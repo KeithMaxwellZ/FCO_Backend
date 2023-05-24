@@ -21,6 +21,7 @@ CYAN = Status("Malleable", "cyan", 12)
 BLUE = Status("Sturdy", "blue", 15)
 PURPLE = Status("Primed", "purple", 12)
 GREEN = Status("Pliant", "green", 12)
+TEMP = Status("TEMP", "TEMP", 10)
 
 BLACK = Status("Poor", "black", -1)
 RAINBOW = Status("Excellent", "rainbow", -1)
@@ -33,7 +34,8 @@ STATUS_REF = {
     'cyan': CYAN,
     'blue': BLUE,
     'purple': PURPLE,
-    'green': GREEN
+    'green': GREEN,
+    'temp': TEMP,
 }
 
 
@@ -77,7 +79,8 @@ class StatusManager:
             self.last = next_status
             return next_status
         elif self.mode == 2:
-            # Evenly distributed TODO: need some data
+            if self.last == TEMP:
+                return RED
             r = random.randint(0, 99)
             return self.table[r]
 

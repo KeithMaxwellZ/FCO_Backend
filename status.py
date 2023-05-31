@@ -21,11 +21,10 @@ CYAN = Status("Malleable", "cyan", 12)
 BLUE = Status("Sturdy", "blue", 15)
 PURPLE = Status("Primed", "purple", 12)
 GREEN = Status("Pliant", "green", 12)
-TEMP = Status("TEMP", "TEMP", 10)
+Orange = Status("GoodOmen", "Orange", 15)
 
 BLACK = Status("Poor", "black", -1)
 RAINBOW = Status("Excellent", "rainbow", -1)
-
 
 STATUS_REF = {
     'white': WHITE,
@@ -35,8 +34,10 @@ STATUS_REF = {
     'blue': BLUE,
     'purple': PURPLE,
     'green': GREEN,
-    'temp': TEMP,
+    'good_omen': Orange,
 }
+
+ORDER = [Orange, CYAN, PURPLE, GREEN, BLUE, YELLOW, BLACK, RAINBOW, RED, WHITE]
 
 
 class StatusManager:
@@ -55,10 +56,12 @@ class StatusManager:
 
         self.table = []
 
-        if mode == 2:
-            for i in self.HARD_STATUS:
-                for j in range(i.rate):
-                    self.table.append(i)
+        if mode > 1:
+            bin_arr = "{0:b}".format(mode).zfill(len(ORDER))
+            for i in range(len(ORDER)):
+                if bin_arr[i] == '1':
+                    for j in range(ORDER[i].rate):
+                        self.table.append(ORDER[i])
         while len(self.table) < 100:
             self.table.append(WHITE)
 
@@ -78,9 +81,8 @@ class StatusManager:
                 next_status = WHITE
             self.last = next_status
             return next_status
-        elif self.mode == 2:
-            if self.last == TEMP:
+        elif self.mode >= 2:
+            if self.last == Orange:
                 return RED
             r = random.randint(0, 99)
             return self.table[r]
-

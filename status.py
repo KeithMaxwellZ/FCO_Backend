@@ -85,4 +85,6 @@ class StatusManager:
             if self.last == Orange:
                 return RED
             r = random.randint(0, 99)
-            return self.table[r]
+            res = self.table[r]
+            self.last = res
+            return res

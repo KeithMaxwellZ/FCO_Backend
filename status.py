@@ -83,6 +83,7 @@ class StatusManager:
             return next_status
         elif self.mode >= 2:
             if self.last == Orange:
+                self.last = RED
                 return RED
             r = random.randint(0, 99)
             res = self.table[r]

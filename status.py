@@ -21,7 +21,7 @@ CYAN = Status("Malleable", "cyan", 12)
 BLUE = Status("Sturdy", "blue", 15)
 PURPLE = Status("Primed", "purple", 12)
 GREEN = Status("Pliant", "green", 12)
-Orange = Status("GoodOmen", "orange", 15)
+ORANGE = Status("GoodOmen", "orange", 15)
 
 BLACK = Status("Poor", "black", -1)
 RAINBOW = Status("Excellent", "rainbow", -1)
@@ -34,10 +34,10 @@ STATUS_REF = {
     'blue': BLUE,
     'purple': PURPLE,
     'green': GREEN,
-    'orange': Orange,
+    'orange': ORANGE,
 }
 
-ORDER = [Orange, CYAN, PURPLE, GREEN, BLUE, YELLOW, BLACK, RAINBOW, RED, WHITE]
+ORDER = [ORANGE, CYAN, PURPLE, GREEN, BLUE, YELLOW, BLACK, RAINBOW, RED, WHITE]
 
 
 class StatusManager:
@@ -82,7 +82,7 @@ class StatusManager:
             self.last = next_status
             return next_status
         elif self.mode >= 2:
-            if self.last == Orange:
+            if self.last == ORANGE:
                 self.last = RED
                 return RED
             r = random.randint(0, 99)

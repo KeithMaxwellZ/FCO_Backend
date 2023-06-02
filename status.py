@@ -21,7 +21,7 @@ CYAN = Status("Malleable", "cyan", 12)
 BLUE = Status("Sturdy", "blue", 15)
 PURPLE = Status("Primed", "purple", 12)
 GREEN = Status("Pliant", "green", 12)
-Orange = Status("GoodOmen", "Orange", 15)
+Orange = Status("GoodOmen", "orange", 15)
 
 BLACK = Status("Poor", "black", -1)
 RAINBOW = Status("Excellent", "rainbow", -1)
@@ -34,7 +34,7 @@ STATUS_REF = {
     'blue': BLUE,
     'purple': PURPLE,
     'green': GREEN,
-    'good_omen': Orange,
+    'orange': Orange,
 }
 
 ORDER = [Orange, CYAN, PURPLE, GREEN, BLUE, YELLOW, BLACK, RAINBOW, RED, WHITE]

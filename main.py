@@ -43,7 +43,7 @@ class Engine:
         self.prog_mod = int(progMod) / 100
         self.qlty_mod = int(qltyMod) / 100
 
-        self.red = red
+        self.red = int(red)
 
         self.inner_quiet = 0  # Inner quiet level
         self.prog_current = 0  # Current progress

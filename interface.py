@@ -39,11 +39,11 @@ class EngineManager:
 
     def start(self, userid,
               progEff, qltyEff, cpTotal,
-              duraTotal, progTotal, qltyTotal, progDiv, qltyDiv, progMod, qltyMod, statusMode=2):
+              duraTotal, progTotal, qltyTotal, progDiv, qltyDiv, progMod, qltyMod, red=1.5, statusMode=2):
         userid = str(userid)
         self.expert_engine[userid] = Engine(progEff, qltyEff, cpTotal,
                                             duraTotal, progTotal, qltyTotal, progDiv, qltyDiv, progMod, qltyMod,
-                                            statusMode=statusMode)
+                                            red=1.5, statusMode=statusMode)
 
     def get_info(self, userid):
         e: Engine
@@ -109,6 +109,7 @@ def engine(uid: int, cmd):
                 qltyDiv=data['QualityDivider'],
                 progMod=data['ProgressModifier'],
                 qltyMod=data['QualityModifier'],
+                red=data['red'],
                 statusMode=data['Mode']
             )
             return payload_gen(200, 'Success', None)

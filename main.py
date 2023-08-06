@@ -27,7 +27,7 @@ class Engine:
             self,
             progEff, qltyEff, cpTotal,
             duraTotal, progTotal, qltyTotal, progDiv, qltyDiv, progMod, qltyMod,
-            statusMode=2):
+            red=1.5, statusMode=2):
         """
         check the comment for other args
         :param statusMode: see status.Status for available options
@@ -42,6 +42,8 @@ class Engine:
         self.qlty_div = int(qltyDiv) / 10
         self.prog_mod = int(progMod) / 100
         self.qlty_mod = int(qltyMod) / 100
+
+        self.red = red
 
         self.inner_quiet = 0  # Inner quiet level
         self.prog_current = 0  # Current progress
@@ -99,6 +101,8 @@ class Engine:
 
         # Specifications (reflect provides extra inner quiet
         if r == 100:
+            if action == actions.MastersMend:
+                self.dura_current = min((self.dura_current + 30), self.dura_total)
             if action == actions.ByregotsBlessing:
                 self.inner_quiet = 0
 
@@ -211,7 +215,7 @@ class Engine:
         buff = (1 if self.buffs[5] > 0 else 0) + (0.5 if self.buffs[6] > 0 else 0)
         if not predict:
             self.buffs[5] = 0
-        status_const = 1.5 if self.status == status.RED else 1
+        status_const = self.red if self.status == status.RED else 1
         efficiency = qlty_multiplier * (1 + buff)
         inner_quiet_efficiency = 1 + 0.1 * self.inner_quiet
         if not predict:

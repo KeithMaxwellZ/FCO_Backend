@@ -212,7 +212,7 @@ class MastersMend(ActionBase):
         super().__init__("Master's Mend", 0, 88, 1.0, 0.0, 0.0, -1)
 
     def check_success(self, engine):
-        engine.dura_current = min((engine.dura_current + 30), engine.dura_total)
+        # engine.dura_current = min((engine.dura_current + 30), engine.dura_total)
         return self.success_rate
 
 

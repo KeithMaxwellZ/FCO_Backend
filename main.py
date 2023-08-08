@@ -102,6 +102,7 @@ class Engine:
         # Specifications (reflect provides extra inner quiet
         if r == 100:
             if action == actions.MastersMend:
+                print(111)
                 self.dura_current = min((self.dura_current + 30), self.dura_total)
             if action == actions.ByregotsBlessing:
                 self.inner_quiet = 0
@@ -231,7 +232,7 @@ class Engine:
         )
 
     def calculate_cp(self, cp_cost):
-        if cp_cost > self.cp_current:
+        if cp_cost * (0.5 if self.status == status.GREEN else 1) > self.cp_current:
             raise EngineException(4)
         return math.floor(
             cp_cost *  # Base cp cost
